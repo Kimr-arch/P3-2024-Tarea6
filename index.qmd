@@ -1,3 +1,50 @@
+# Replicando gráficos de Plotly
+
+Utilice este Notebook para replicar cualquiera de los gráficos financieros de la guía de Plotly (Ver 👉 [aquí](https://plotly.com/python/#financial-charts))
+
 ```{python}
-1 + 1
+import plotly.express as px
+
+df = px.data.gapminder().query("country=='Canada'")
+fig = px.line(df, x="year", y="lifeExp", title='Life expectancy in Canada')
+fig.show()
+
+```
+
+2.  Trate de ver e interpretar los datos del DataFrame. Utlice las funciones que hemos visto en clase, por ejemplo: `min`, `max`, `mean`, `median`, `quantile`, corrobore los datos con la función `describe`.
+
+    ```{python}
+    print(df['lifeExp'].min())
+    print(df['lifeExp'].max())
+    print(df['lifeExp'].mean())
+    print(df['lifeExp'].median())
+    print(df['lifeExp'].quantile([.5,.25,.5,.75,.95]))
+
+    ```
+
+<!-- -->
+
+3.  Con los datos de los ejemplos en plotly (es decir, alguno de los DataFrame), trate de crear:
+
+    -   Un gráfico de caja.
+
+    -   Un gráfico de histograma.
+
+    -   Trate de utiliza la función [pandas.cut](https://www.google.com/url?q=https%3A%2F%2Fpandas.pydata.org%2Fdocs%2Freference%2Fapi%2Fpandas.cut.html) para crear 10 segmentos o contenedores (use la propiedad `bin`).
+
+        ```{python}
+        fig = px.box(df, y="lifeExp")
+        fig.show()
+        ```
+
+```{python}
+fig = px.histogram(df, x='lifeExp', nbins=10)
+fig.show()
+```
+
+```{python}
+import pandas as pd
+
+bins = pd.cut(df["lifeExp"],10)
+bins.value_counts()
 ```
